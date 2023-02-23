@@ -33,5 +33,5 @@
 
 # Other
 /cmake-build-debug/
-/sdkconfig
+/build/
 .idea
