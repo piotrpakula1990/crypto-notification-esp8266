@@ -4,7 +4,12 @@
 extern "C" {
 #endif
 
-void get_btc_price();
+struct price {
+    char *crypto;
+    double value;
+};
+
+struct price get_btc_price();
 
 #ifdef __cplusplus
 }

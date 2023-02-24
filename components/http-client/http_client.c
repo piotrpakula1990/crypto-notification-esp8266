@@ -2,6 +2,7 @@
 #include <esp_err.h>
 #include <esp_http_client.h>
 #include "http_client.h"
+#include "cJSON.h"
 
 /* SDK Config
  * CONFIG_ESP_TLS_INSECURE=y
@@ -14,9 +15,10 @@
 
 static const char *TAG = "HTTP_CLIENT";
 
-void get_btc_price() {
+struct price get_btc_price() {
 
     char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};
+    struct price btc = {};
 
     esp_http_client_config_t config = {
             .url = "https://api.coinbase.com/v2/prices/BTC-USD/buy",
@@ -34,7 +36,13 @@ void get_btc_price() {
             int data_read = esp_http_client_read_response(client, output_buffer, MAX_HTTP_OUTPUT_BUFFER);
             if (data_read >= 0) {
                 ESP_LOGI(TAG, "HTTP GET %d, response = %s", esp_http_client_get_status_code(client), output_buffer);
-                ESP_LOG_BUFFER_HEX(TAG, output_buffer, strlen(output_buffer));
+                cJSON *json = cJSON_Parse(output_buffer);
+                cJSON *data = cJSON_GetObjectItem(json, "data");
+
+                btc.crypto = cJSON_GetObjectItem(data, "base")->valuestring;
+                btc.value = 10; // todo functions stdlib don't work. Use strtod(cJSON_GetObjectItem(data, "amount")->valuestring, NULL);
+
+                cJSON_Delete(json);
             } else {
                 ESP_LOGE(TAG, "Failed to read response");
             }
@@ -46,4 +54,6 @@ void get_btc_price() {
     }
 
     esp_http_client_close(client);
+
+    return btc;
 }

@@ -13,7 +13,8 @@ void app_main() {
 
     wifi_start();
 
-    get_btc_price();
+    struct price btc = get_btc_price();
+    printf("Return: crypto: %s, price = %f\n", btc.crypto, btc.value);
 
     for (int i = 2; i >= 0; i--) {
         printf("Ending in %d seconds...\n", i);
