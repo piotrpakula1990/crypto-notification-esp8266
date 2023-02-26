@@ -40,7 +40,7 @@ struct price get_btc_price() {
                 cJSON *data = cJSON_GetObjectItem(json, "data");
 
                 btc.crypto = cJSON_GetObjectItem(data, "base")->valuestring;
-                btc.value = 10; // todo functions stdlib don't work. Use strtod(cJSON_GetObjectItem(data, "amount")->valuestring, NULL);
+                btc.value = strtod(cJSON_GetObjectItem(data, "amount")->valuestring, NULL);
 
                 cJSON_Delete(json);
             } else {
