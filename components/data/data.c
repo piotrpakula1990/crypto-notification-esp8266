@@ -1,8 +1,6 @@
 #include <http_client.h>
 #include "data.h"
 
-#define BTC_TABLE_SIZE 10
-
 struct btc_data {
     char *crypto;
     int index;

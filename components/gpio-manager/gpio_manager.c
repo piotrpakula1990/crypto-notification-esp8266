@@ -1,7 +1,7 @@
-#include <gpio.h>
+#include <driver/gpio.h>
 #include "gpio_manager.h"
 
-#define GPIO_3     3    // D0, red led
+#define GPIO_3     3    // DO, red led
 
 void gpio_start() {
     gpio_config_t io_conf = {
