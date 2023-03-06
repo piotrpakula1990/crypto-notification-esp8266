@@ -60,6 +60,6 @@ _Noreturn void app_main() {
             set_red_led_off();
         }
 
-        vTaskDelay(120000 / portTICK_RATE_MS); // ~120s
+        vTaskDelay(60000 / portTICK_RATE_MS); // ~60s
     }
 }

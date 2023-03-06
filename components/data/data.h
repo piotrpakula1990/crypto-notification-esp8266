@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#define BTC_TABLE_SIZE 5
+#define BTC_TABLE_SIZE 10
 
 double *get_last_btc_prices();
 

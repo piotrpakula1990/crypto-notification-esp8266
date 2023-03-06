@@ -17,10 +17,10 @@ static const char *TAG = "HTTP_CLIENT";
 
 struct price get_btc_price() {
 
-    char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};
-    struct price btc = {};
+    static char output_buffer[MAX_HTTP_OUTPUT_BUFFER] = {0};
+    static struct price btc = {};
 
-    esp_http_client_config_t config = {
+    static esp_http_client_config_t config = {
             .url = "https://api.coinbase.com/v2/prices/BTC-USD/buy",
             .method  = HTTP_METHOD_GET
     };
@@ -43,6 +43,8 @@ struct price get_btc_price() {
                 btc.value = strtod(cJSON_GetObjectItem(data, "amount")->valuestring, NULL);
 
                 cJSON_Delete(json);
+                free(json);
+                free(data);
             } else {
                 ESP_LOGE(TAG, "Failed to read response");
             }
@@ -53,7 +55,7 @@ struct price get_btc_price() {
         ESP_LOGE(TAG, "Failed to open HTTP connection: %s", esp_err_to_name(err));
     }
 
-    esp_http_client_close(client);
+    esp_http_client_cleanup(client);
 
     return btc;
 }

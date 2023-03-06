@@ -1,7 +1,7 @@
 # crypto-notification-esp8266
 
 It is application for ESP8266 D1 R1 WiFi board, that inform users about high BTC price changes.
-In case when BTC price change about 1% in 2 minutes, a red led turn on for next 10 minutes.
+In case when BTC price change about 1% in 1 minute, a red led turn on for next 10 minutes.
 
 ### Instruction:
 - Connect the red led with DO and GND inputs.
